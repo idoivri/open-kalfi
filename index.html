@@ -7,12 +7,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
 	<link rel="stylesheet" href="../dist/leaflet.css" />
-	<script src="../dist/leaflet.js"></script>
+	<script src="dist/leaflet.js"></script>
 
 	<link rel="stylesheet" href="../css/style.css" />
 
-	<script src="../dist/papaparse.js"></script>
-	 <script src="../dist/PruneCluster.js"></script>
+	<script src="dist/papaparse.js"></script>
+	 <script src="dist/PruneCluster.js"></script>
 	<!--
 	<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
 	<script src="http://jquery-csv.googlecode.com/git/src/jquery.csv.js"></script>
@@ -57,12 +57,12 @@
 		map.locate({setView: true, maxZoom: 16});
 		//map.setView([31.782,35.21933], 16);
 
-		Papa.parse("../data/kalpiot.csv", {
+		Papa.parse("data/kalpiot-full.csv", {
 			header: false,
 			download: true,
 			complete: function(results) {
 
-				console.log(results);
+				//console.log(results);
 				var len = results.data.length;
 
 				for (var i=0; i<len; i++){
@@ -74,15 +74,15 @@
 			        //	popupString+=item + ' \n';
 			          
 			        //}
-			        console.log("COORDS: " + line[12] + "," + line[11]);
+			        //console.log("COORDS: " + line[12] + "," + line[11]);
 			        if (line[12]===undefined || line[11]=== undefined) {
-			        	console.log("COORDS: are undefined!");	
+			        	//console.log("COORDS: are undefined!");	
 			        }
 			        else {
 				        var lat = parseFloat(line[12]);
 				        var lng = parseFloat(line[11]);
 				        if (isNaN(lat) || isNaN(lng)) {
-				        	console.log("Address: "+ + " could not be parsed!");
+				        	//console.log("Address: "+ + " could not be parsed!");
 				        }
 				        else {
 				        	var str = createPopUpStr(results.data[i]);	
@@ -99,7 +99,7 @@
 		});
 
 		function createPopUpStr(arr) {
-			console.log(arr);
+			//console.log(arr);
 			str = "<div class=\"marker\">"
 			str += "<b>קלפי מספר:" + arr[4] + "</b><br/>";
 			str += "בנפה: " + arr[2] + "<br/>";
@@ -116,36 +116,6 @@
 			return str;	
 		};
 
-		/*
-		$(document).ready(function() {
-		    $.ajax({
-		        type: "GET",
-		        url: "../data/business_with_addresses.csv",
-		        dataType: "text",
-		        success: function(data) {processData(data);}
-		     });
-		});
-
-
-		function processData(allText) {
-
-			var data = $.csv.toArray(allText);
-
-			for(var row in data) {
-				var popupString = "";
-				var latlng = "";
-				console.print(row)
-		        //html += '<tr>\r\n';
-		        for(var item in data[row]) {
-		        	popupString+=item + " "
-		          //html += '<td>' + item + ':' + data[row][item] + '</td>\r\n';
-		        }
-		        popupString +='\r\n'
-		        console.print(popupString)
-		        //html += '</tr>\r\n';
-		    };
-		};
-		*/
 	</script>
 </body>
 </html>
