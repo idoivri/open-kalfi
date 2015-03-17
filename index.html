@@ -58,6 +58,14 @@
 		map.locate({setView: true, maxZoom: 16});
 		//map.setView([31.782,35.21933], 16);
 
+		var myWheelChairIcon = L.icon({
+		    iconUrl: 'img/map-marker-small-md.png',
+		    iconSize: [90, 75],
+		    iconAnchor: [21, 73],
+		    popupAnchor: [-3, -76],
+		});
+
+
 		Papa.parse("data/kalpiot-full.csv", {
 			header: false,
 			download: true,
@@ -88,6 +96,9 @@
 				        else {
 				        	var str = createPopUpStr(results.data[i]);	
 					        var marker = new PruneCluster.Marker(lng, lat)
+					        if (results.data[i][6]!==" " || results.data[i][7]!==" ") {
+					        	marker.data.icon = myWheelChairIcon;
+					        }
 					        marker.data.popup= str;
 					        //marker.setPopupContent(str)
 					        pruneCluster.RegisterMarker(marker);
@@ -100,12 +111,19 @@
 		});
 
 		function createPopUpStr(arr) {
-			//console.log(arr);
+			console.log(arr);
 			str = "<div class=\"marker\">"
 			str += "<b>קלפי מספר:" + arr[4] + "</b><br/>";
 			str += "בנפה: " + arr[2] + "<br/>";
 			str += "כתובת: " + arr[0] + "<br/>";
 			str += "מיקום הקלפי: " + arr[5] + "<br/>";
+			if (arr[6]=="כ") {
+				str += "<b>קלפי נגישה ";
+				if (arr[7]=="כ") {
+					str+="מיוחדת";
+				} 
+				str +="</b><br/>";
+			}
 			
 			/*str += "<a href=\"tel:"+arr[2]+"\">"+arr[2]+"</a><br/>";
 			if (arr[3]!="") {
